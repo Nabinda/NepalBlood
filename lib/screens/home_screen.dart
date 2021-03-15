@@ -2,7 +2,6 @@ import 'package:bloodnepal/widgets/categories.dart';
 import 'package:bloodnepal/widgets/curved_design.dart';
 import 'package:bloodnepal/widgets/funfacts.dart';
 import 'package:flutter/material.dart';
-import 'package:bloodnepal/custom_theme.dart' as style;
 
 enum _SelectedTabs {home,notifications,profile}
 

@@ -38,4 +38,5 @@ class CustomTheme{
       fontFamily: 'Roboto',
       fontSize: 16,
   );
+  static const Color themeColor = Color(0xffF99297);
 }

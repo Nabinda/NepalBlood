@@ -1,14 +1,16 @@
+import 'package:bloodnepal/screens/blood_bank.dart';
+import 'package:bloodnepal/screens/donor_screen.dart';
+import 'package:bloodnepal/screens/events.dart';
+import 'package:bloodnepal/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
 class Categories extends StatelessWidget{
   List<Cat> _categories = [
-    Cat("Events Nearby", "events.png"),
-    Cat("Find a Donor", "search.png"),
-    Cat("Blood Bank", "blood-bank.png"),
-     Cat("Request Blood", "request.png"),
-    Cat("Top Donors", "top.png"),
-    Cat("Become a Donor", "donor.png")
+    Cat("Events Nearby", "events.png",Events.routeName),
+    Cat("Find a Donor", "search.png",SearchScreen.routeName),
+    Cat("Blood Bank", "blood-bank.png",BloodBankScreen.routeName),
+    Cat("Become a Donor", "donor.png",DonorScreen.routeName)
   ];
   @override
   Widget build(BuildContext context) {
@@ -27,20 +29,25 @@ class Categories extends StatelessWidget{
               scrollDirection: Axis.horizontal,
               itemCount: _categories.length,
               itemBuilder: (ctx,ind){
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xffF99297),
-                      width: 1
-                    )
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 8.0),
-                  padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
-                  child: Column(
-                    children: [
-                        Image.asset("assets/images/"+_categories[ind].icon,height: 100,width: 100,color: Color(0xffF99297),),
-                        Text(_categories[ind].name)
-                    ],
+                return InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, _categories[ind].routeName);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Color(0xffF99297),
+                        width: 1
+                      )
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                    child: Column(
+                      children: [
+                          Image.asset("assets/images/"+_categories[ind].icon,height: 100,width: 100,color: Color(0xffF99297),),
+                          Text(_categories[ind].name)
+                      ],
+                    ),
                   ),
                 );
               },
@@ -55,5 +62,6 @@ class Categories extends StatelessWidget{
 class Cat{
   final name;
   final icon;
-  Cat(this.name,this.icon);
+  final routeName;
+  Cat(this.name,this.icon,this.routeName);
 }
