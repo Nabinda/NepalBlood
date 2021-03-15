@@ -30,6 +30,10 @@ dependencies:
   cupertino_icons: ^1.0.1
   carousel_slider:
   salomon_bottom_bar:
+  geolocator: ^7.0.1
+  app_settings: ^4.1.0
+  geocoding: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
