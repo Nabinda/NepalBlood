@@ -8,12 +8,33 @@ class CustomTheme{
       fontSize: 25,
       fontWeight: FontWeight.w400
   );
+  static const TextStyle kTextGreyStyle = TextStyle(
+      color: Colors.blueGrey,
+      fontFamily: 'Noto',
+      fontStyle: FontStyle.italic,
+  );
+  static const TextStyle largeHeader = TextStyle(
+      color: Colors.white,
+      fontFamily: 'Roboto',
+      fontSize: 40,
+      fontWeight: FontWeight.w500
+  );
+  static const TextStyle buttonText = TextStyle(
+      color: Colors.white,
+      fontFamily: 'Roboto',
+      fontSize: 16,
+      fontWeight: FontWeight.w500
+  );
   static const TextStyle headerBlackRoboto = TextStyle(
-
       fontFamily: 'Roboto',
       fontStyle: FontStyle.italic,
       fontSize: 25,
       fontWeight: FontWeight.w400
+  );
+  static const TextStyle eventTitle = TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 30,
+      fontWeight: FontWeight.w500
   );
   static const TextStyle headerNoto = TextStyle(
       color: Colors.white,
@@ -34,9 +55,30 @@ class CustomTheme{
       fontSize: 20,
       fontWeight: FontWeight.bold
   );
+  static const TextStyle eventHeader = TextStyle(
+      fontFamily: 'NotoSans',
+      fontSize: 18,
+  );
   static const TextStyle normalText = TextStyle(
       fontFamily: 'Roboto',
       fontSize: 16,
   );
+  static const TextStyle calendarText = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Roboto',
+    fontSize: 22,
+  );
   static const Color themeColor = Color(0xffF99297);
+  static const buttonDecoration = const BoxDecoration(
+    boxShadow: [
+      BoxShadow(
+        color: Colors.white70,
+        offset: Offset(0,8),
+        blurRadius: 10.0,
+      ),
+    ],
+    color: themeColor
+  );
+
 }

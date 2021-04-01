@@ -38,7 +38,19 @@ dependencies:
   #To manage some settings
   app_settings: ^4.1.0
   permission_handler: ^6.1.0
+  #Format Date and Time
+  intl: ^0.17.0
+  #Calls and emails
+  url_launcher: ^6.0.2
+  #email validator
+  email_validator: ^2.0.1
   provider: ^5.0.0
+  firebase_auth: ^1.0.1
+  firebase_storage:
+  firebase_core: ^1.0.2
+  cloud_firestore: ^1.0.3
+  #flutter_otp: ^0.3.2
+  pinput: ^1.2.0
 
 
 dev_dependencies:

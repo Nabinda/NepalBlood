@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
 class Categories extends StatelessWidget{
-  List<Cat> _categories = [
+  final List<Cat> _categories = [
     Cat("Events Nearby", "events.png",Events.routeName),
     Cat("Find a Donor", "search.png",SearchScreen.routeName),
     Cat("Blood Bank", "blood-bank.png",BloodBankScreen.routeName),

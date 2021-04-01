@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
 class FunFacts extends StatelessWidget {
-  List<FunFact> _funFacts = [
+ final List<FunFact> _funFacts = [
     FunFact("There's Gold in Your Blood.", "doremon.png", Colors.blue),
     FunFact("Nearly 7% of the body weight of a human is made up of blood.", "mickeymouse.png", Colors.red),
     FunFact("Donating blood never reduces a person’s physical energy.", "simpson.png", Colors.yellow),

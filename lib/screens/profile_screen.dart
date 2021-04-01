@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
             return AlertDialog(
               title: Text('Turn On Location'),
               actions: <Widget>[
-                new FlatButton(
+                new TextButton(
                     child: new Text('OK'),
                     onPressed: (){
                       AppSettings.openLocationSettings();
@@ -36,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
               return AlertDialog(
                 title: Text('Location Permission Required'),
                 actions: <Widget>[
-                  new FlatButton(
+                  new TextButton(
                     child: new Text('OK'),
                     onPressed: (){
                       AppSettings.openAppSettings();
@@ -54,7 +54,7 @@ class ProfileScreen extends StatelessWidget {
               return AlertDialog(
                 title: Text('Location Permission Required'),
                 actions: <Widget>[
-                  new FlatButton(
+                  new TextButton(
                     child: new Text('OK'),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -73,8 +73,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        child:FlatButton(
-          color: Colors.red,
+        child:TextButton(
           onPressed: () async{
           final position = await _checkPermission(context);
           List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
