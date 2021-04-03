@@ -1,5 +1,6 @@
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/provider/events_provider.dart';
+import 'package:bloodnepal/screens/add_events.dart';
 import 'package:bloodnepal/screens/blood_bank.dart';
 import 'package:bloodnepal/screens/bottom_bar_screen.dart';
 import 'package:bloodnepal/screens/donor_screen.dart';
@@ -12,10 +13,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
-  runApp(MyApp());
+  await Firebase.initializeApp().whenComplete((){
+    runApp(MyApp());
+  });
+
 }
 
 class MyApp extends StatelessWidget {
@@ -34,11 +37,13 @@ class MyApp extends StatelessWidget {
           routes: {
         Events.routeName:(ctx)=>Events(),
         LoginScreen.routeName:(ctx)=>LoginScreen(),
+        BottomBarScreen.routeName:(ctx)=>BottomBarScreen(),
         SignUpScreen.routeName:(ctx)=>SignUpScreen(),
         SearchScreen.routeName:(ctx)=>SearchScreen(),
         BloodBankScreen.routeName:(ctx)=>BloodBankScreen(),
         DonorScreen.routeName:(ctx)=>DonorScreen(),
         EventsDetailScreen.routeName:(ctx)=>EventsDetailScreen(),
+        AddEventsScreen.routeName:(ctx)=>AddEventsScreen(),
       },
       ),
     );

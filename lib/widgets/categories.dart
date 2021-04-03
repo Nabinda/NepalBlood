@@ -1,3 +1,4 @@
+import 'package:bloodnepal/screens/add_events.dart';
 import 'package:bloodnepal/screens/blood_bank.dart';
 import 'package:bloodnepal/screens/donor_screen.dart';
 import 'package:bloodnepal/screens/events.dart';
@@ -6,14 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
 class Categories extends StatelessWidget{
-  final List<Cat> _categories = [
-    Cat("Events Nearby", "events.png",Events.routeName),
-    Cat("Find a Donor", "search.png",SearchScreen.routeName),
-    Cat("Blood Bank", "blood-bank.png",BloodBankScreen.routeName),
-    Cat("Become a Donor", "donor.png",DonorScreen.routeName)
-  ];
+  final String role;
+  Categories({@required this.role});
   @override
   Widget build(BuildContext context) {
+    final List<Cat> _categories = [
+      Cat("Events Nearby", "events.png",Events.routeName),
+      Cat("Find a Donor", "search.png",SearchScreen.routeName),
+      Cat("Blood Bank", "blood-bank.png",BloodBankScreen.routeName),
+      if(role=="Seeker")
+      Cat("Become a Donor", "donor.png",DonorScreen.routeName),
+      if(role=="Admin")
+        Cat("Add Events","add_event.png",AddEventsScreen.routeName)
+    ];
     return Container(
       padding: EdgeInsets.only(left: 8.0),
       child: Column(

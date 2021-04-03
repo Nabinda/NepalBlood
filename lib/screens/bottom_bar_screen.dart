@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class BottomBarScreen extends StatefulWidget {
+  static const routeName = "/bottom_bar_screen";
   @override
   _BottomBarScreenState createState() => _BottomBarScreenState();
 }

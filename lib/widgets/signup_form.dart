@@ -1,3 +1,4 @@
+import 'package:bloodnepal/helper/loading_helper.dart';
 import 'package:bloodnepal/model/user_model.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/screens/login.dart';
@@ -21,12 +22,6 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   @override
-  void initState() {
-    Firebase.initializeApp();
-    super.initState();
-  }
-
-  @override
   void dispose() {
     passwordController.dispose();
     firstNameController.dispose();
@@ -41,6 +36,7 @@ class _SignUpFormState extends State<SignUpForm> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   bool hidePass = true;
+  bool _isSigning = false;
   bool hideCon = true;
   bool _isLoading = false;
   String location = "Location";
@@ -61,6 +57,8 @@ class _SignUpFormState extends State<SignUpForm> {
           lat: _lat,
           long: _long,
           uid: user.uid,
+          status: null,
+          bloodGroup: null,
           firstName: _firstName,
           lastName: _lastName,
           contactNo: _contactNo,
@@ -74,8 +72,9 @@ class _SignUpFormState extends State<SignUpForm> {
           MaterialPageRoute(
               builder: (BuildContext context) => LoginScreen()));
     }).catchError((error) {
-      print("Error Messages");
-      print(error);
+       setState(() {
+         _isSigning = false;
+       });
       return showDialog(
           context: context,
           builder: (context) {
@@ -130,6 +129,9 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   Future<void> _signUp() async {
+    setState(() {
+      _isSigning = true;
+    });
     if (_form.currentState.validate()) {
       _form.currentState.save();
       try {
@@ -138,7 +140,9 @@ class _SignUpFormState extends State<SignUpForm> {
             .then((authResult) {
           verification();
         }).catchError((error) {
-          print(error.code);
+          setState(() {
+            _isSigning = false;
+          });
           if (error.code == "email-already-in-use") {
             return showDialog(
                 context: context,
@@ -164,26 +168,10 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading
-        ? Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                  style.CustomTheme.themeColor,
-                )),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Getting Location",
-                  style: style.CustomTheme.normalText,
-                )
-              ],
-            ),
-          )
+    return _isSigning?
+    LoadingHelper(loadingText: "Signing In")
+        :_isLoading
+        ? LoadingHelper(loadingText: "Fetching Your Location")
         : Container(
             child: Form(
               key: _form,
@@ -215,8 +203,9 @@ class _SignUpFormState extends State<SignUpForm> {
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person,color: style.CustomTheme.themeColor,),
                           hintText: "First Name",
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          ),
                     ),
                   ),
                   Container(
@@ -246,7 +235,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                           hintText: "Last Name",
-                          contentPadding: EdgeInsets.only(left: 20)),
+                         prefixIcon:  Icon(Icons.person,color: style.CustomTheme.themeColor,),),
                     ),
                   ),
                   Container(
@@ -275,7 +264,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           hintText: "Contact No",
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          prefixIcon:  Icon(Icons.phone,color: style.CustomTheme.themeColor,)),
                     ),
                   ),
                   Container(
@@ -298,7 +287,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             },
                           ),
                           hintText: location,
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          prefixIcon:  Icon(Icons.location_pin,color: style.CustomTheme.themeColor,)),
                     ),
                   ),
                   SizedBox(
@@ -324,7 +313,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           hintText: "Email",
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          prefixIcon:  Icon(Icons.email,color: style.CustomTheme.themeColor,)),
                     ),
                   ),
                   SizedBox(
@@ -353,10 +342,11 @@ class _SignUpFormState extends State<SignUpForm> {
                       decoration: InputDecoration(
                           hintText: "Password",
                           suffixIcon: IconButton(
+                              color: style.CustomTheme.themeColor,
                               icon: Icon(
                                 hidePass
-                                    ? Icons.remove_red_eye
-                                    : Icons.panorama_fish_eye_sharp,
+                                    ? Icons.remove
+                                    : Icons.remove_red_eye,
                                 size: 16,
                               ),
                               onPressed: () {
@@ -364,7 +354,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                   hidePass = !hidePass;
                                 });
                               }),
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          prefixIcon:  Icon(Icons.vpn_key,color: style.CustomTheme.themeColor,)),
                     ),
                   ),
                   SizedBox(
@@ -388,10 +378,11 @@ class _SignUpFormState extends State<SignUpForm> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
+                            color: style.CustomTheme.themeColor,
                               icon: Icon(
                                 hideCon
-                                    ? Icons.remove_red_eye
-                                    : Icons.panorama_fish_eye_sharp,
+                                    ? Icons.remove
+                                    : Icons.remove_red_eye,
                                 size: 16,
                               ),
                               onPressed: () {
@@ -400,7 +391,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                 });
                               }),
                           hintText: "Confirm Password",
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          prefixIcon:  Icon(Icons.vpn_key,color: style.CustomTheme.themeColor,)),
                     ),
                   ),
                   GestureDetector(

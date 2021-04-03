@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-enum Status { Active, Offline }
-
 class UserModel {
   String uid;
   String firstName;
@@ -9,7 +7,7 @@ class UserModel {
   String contactNo;
   String location;
   String bloodGroup;
-  Status status;
+  String status;
   String email;
   String role;
   String lat;

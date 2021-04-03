@@ -1,7 +1,9 @@
+import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/widgets/categories.dart';
 import 'package:bloodnepal/widgets/curved_design.dart';
 import 'package:bloodnepal/widgets/funfacts.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 enum _SelectedTabs {home,notifications,profile}
 
@@ -19,13 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final userInfo = Provider.of<AuthProvider>(context,listen: false).getCurrentUser();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
             CurvedDesign(),
-            Categories(),
+            Categories(role:userInfo.role),
             FunFacts()
           ],
         ),
