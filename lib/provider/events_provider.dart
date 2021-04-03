@@ -1,48 +1,62 @@
 import 'package:bloodnepal/model/event_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class EventProvider with ChangeNotifier {
-  List<EventModel> _eventList = [
-    EventModel(
-      id: "1",
-      title: "Title",
-      description: "Event Description",
-      startDate: DateTime(2021, 3, 25),
-      contactNo: "9803216622",
-      email: "nabindangol2@gmail.com",
-      location: "Nepal",
-      alarmInterval: Duration(hours: 1),
-      endDate: DateTime(2021, 3, 26),
-    ),EventModel(
-      id: "2",
-      title: "The Day We Met",
-      description: "When We were bored",
-      contactNo: "9803216622",
-      email: "nabindangol2@gmail.com",
-      startDate: DateTime.now(),
-      location: "Nepal",
-      alarmInterval: Duration(hours: 1),
-      endDate: DateTime(2021, 3, 26),
-    ),EventModel(
-      id: "3",
-      title: "Birthday",
-      contactNo: "9803216622",
-      email: "nabindangol2@gmail.com",
-      description: "Nidhisha Mandevkars Birthday",
-      startDate: DateTime(2021, 3, 26),
-      location: "Nepal",
-      alarmInterval: Duration(hours: 1),
-      endDate: DateTime(2021, 3, 26),
-    )
-  ];
-  List<EventModel> getEvents(){
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+  String startTime ="";
+  String endTime = "";
+  List<EventModel> _eventList = [];
+  List<EventModel> getEvents() {
     notifyListeners();
     return [..._eventList];
   }
-
-  EventModel findEventById(String id){
+  set uStartDate(DateTime date){
+    startDate = date;
     notifyListeners();
-    return _eventList.firstWhere((event) =>event.id==id);
+  }
+  set uEndDate(DateTime date){
+    endDate = date;
+    notifyListeners();
+  }
+  set uStartTime(String time){
+    startTime = time;
+    notifyListeners();
+  }
+  set uEndTime(String time){
+    endTime = time;
+    notifyListeners();
   }
 
+  EventModel findEventById(String id) {
+    notifyListeners();
+    return _eventList.firstWhere((event) => event.id == id);
+  }
+
+  Future<void> addEvent(
+      String title,
+      String description,
+      String location,
+      String contact,
+      String email,) async{
+
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc()
+        .set({
+      "id":DateTime.now(),
+      "title": title,
+      "description": description,
+      "location": location,
+      "contact": contact,
+      "email": email,
+      "start_date": startDate,
+      "start_time": startTime,
+      "end_date":endDate,
+      "end_time":endTime,
+    });
+
+
+  }
 }

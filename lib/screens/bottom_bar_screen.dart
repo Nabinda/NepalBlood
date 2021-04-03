@@ -1,7 +1,9 @@
+import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/screens/home_screen.dart';
 import 'package:bloodnepal/screens/notification_screen.dart';
 import 'package:bloodnepal/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class BottomBarScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
 
   @override
   void initState() {
+    Provider.of<AuthProvider>(context,listen: false).addToPrefs();
     _pages = [
       {'page': HomeScreen(), 'title': "Home"},
       {

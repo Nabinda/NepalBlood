@@ -44,13 +44,17 @@ dependencies:
   url_launcher: ^6.0.2
   #email validator
   email_validator: ^2.0.1
+  #state management
   provider: ^5.0.0
+  #Firebase
   firebase_auth: ^1.0.1
   firebase_storage:
   firebase_core: ^1.0.2
   cloud_firestore: ^1.0.3
-  #flutter_otp: ^0.3.2
-  pinput: ^1.2.0
+  #save_some_credential_in_device
+  shared_preferences: ^2.0.5
+  #date-formatter
+  date_format: ^2.0.2
 
 
 dev_dependencies:
