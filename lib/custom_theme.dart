@@ -52,16 +52,24 @@ class CustomTheme{
   static const TextStyle normalHeader = TextStyle(
       fontFamily: 'NotoSans',
       fontStyle: FontStyle.italic,
+      color:Colors.black,
       fontSize: 20,
       fontWeight: FontWeight.bold
   );
   static const TextStyle eventHeader = TextStyle(
       fontFamily: 'NotoSans',
       fontSize: 18,
+    color: Colors.black
   );
   static const TextStyle normalText = TextStyle(
       fontFamily: 'Roboto',
       fontSize: 16,
+      color: Colors.black
+  );
+  static const TextStyle normalNotoText = TextStyle(
+      fontFamily: 'Noto',
+      fontSize: 16,
+      color: Colors.black
   );
   static const TextStyle calendarText = TextStyle(
     color: Colors.white,

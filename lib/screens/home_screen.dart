@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userInfo = Provider.of<AuthProvider>(context,listen: false).getCurrentUser();
+    print("User Id: $userInfo");
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

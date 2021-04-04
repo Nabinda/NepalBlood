@@ -12,13 +12,14 @@ import 'package:bloodnepal/screens/search_screen.dart';
 import 'package:bloodnepal/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'custom_theme.dart' as style;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp().whenComplete(() {
-    runApp(MyApp());
+    runApp(Phoenix(child: MyApp()));
   });
 }
 

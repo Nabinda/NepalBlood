@@ -35,9 +35,18 @@ class AuthProvider extends ChangeNotifier {
   }
   Future<void> updateVerification(String uid) async{
     await FirebaseFirestore.instance.collection('Users').doc(uid).update({
-      "Email_verification":true
+      "Email_verification":"true"
     }).catchError((error){
       print("Error on Updating Verification:"+error.toString());
+    });
+  }
+  Future<void> updateBloodGroup(String bloodGroup) async{
+    await FirebaseFirestore.instance.collection('Users').doc(currentUser.uid).update({
+      "Blood_Group":bloodGroup,
+      "Role":"Donor",
+      "Status":"Active"
+    }).catchError((error){
+      print("Error on Updating Blood Group:"+error.toString());
     });
   }
   Future<void> addUserInfo(UserModel userModel) async {
@@ -58,10 +67,11 @@ class AuthProvider extends ChangeNotifier {
       "Blood_Group":userModel.bloodGroup,
       "Status":userModel.status,
       "Email_verification": user.emailVerified,
-      "Phone_verification": false
     });
   }
   void addToPrefs() async{
+    print("I am Here");
+    print(currentUser.uid);
     final userData = json.encode({
       "userId":currentUser.uid,
     });

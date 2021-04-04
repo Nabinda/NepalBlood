@@ -55,6 +55,8 @@ dependencies:
   shared_preferences: ^2.0.5
   #date-formatter
   date_format: ^2.0.2
+  #restart app
+  flutter_phoenix: ^1.0.0
 
 
 dev_dependencies:
