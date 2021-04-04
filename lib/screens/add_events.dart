@@ -43,6 +43,7 @@ class _AddEventsScreenState extends State<AddEventsScreen> {
         _contact,
         _email,
       ).onError((error, stackTrace){
+        print(error);
         ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
       }).then((_){
         ScaffoldMessenger.of(context).showSnackBar(snackBar);

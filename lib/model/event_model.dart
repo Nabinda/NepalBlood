@@ -8,7 +8,8 @@ class EventModel{
   String email;
   DateTime startDate;
   DateTime endDate;
-  Duration alarmInterval;
+  TimeOfDay startTime;
+  TimeOfDay endTime;
   String location;
   EventModel({
     @required this.id,
@@ -18,7 +19,8 @@ class EventModel{
     @required this.email,
     @required this.startDate,
     @required this.endDate,
-    @required this.alarmInterval,
+    @required this.startTime,
+    @required this.endTime,
     @required this.location}
       );
 }

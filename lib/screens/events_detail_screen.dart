@@ -1,10 +1,11 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:bloodnepal/model/event_model.dart';
 import 'package:bloodnepal/provider/events_provider.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
-import 'package:bloodnepal/helper/date_format_helper.dart' as dhl;
+import 'package:bloodnepal/helper/date_format_helper.dart' as dfh;
 import 'package:bloodnepal/helper/manage_permission.dart' as mp;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +43,8 @@ class EventsDetailScreen extends StatelessWidget {
       Event event = Event(
         title: toAddEvent.title,
         location: toAddEvent.location,
-        endDate: toAddEvent.endDate,
-        startDate: toAddEvent.startDate,
+        endDate: toAddEvent.endDate.add(Duration(hours: toAddEvent.endTime.hour,minutes: toAddEvent.endTime.minute)),
+        startDate: toAddEvent.startDate.add(Duration(hours:toAddEvent.startTime.hour,minutes: toAddEvent.startTime.minute )),
         description: toAddEvent.description,
       );
       Add2Calendar.addEvent2Cal(event, androidNoUI: false);
@@ -101,12 +102,18 @@ class EventsDetailScreen extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(dhl.DateFormatHelper.eventDate.format(event.startDate) +
+                  Text(dfh.DateFormatHelper.eventDate
+                      .format(event.startDate)+
                       "-" +
-                      dhl.DateFormatHelper.eventDate.format(event.endDate)),
-                  Text(dhl.DateFormatHelper.hour.format(event.startDate) +
-                      "-" +
-                      dhl.DateFormatHelper.hour.format(event.endDate)),
+                      dfh.DateFormatHelper.eventDate
+                          .format(event.endDate)),
+                  Text(formatDate(
+                      DateTime(2019, 08, 1, event.startTime.hour, event.startTime.minute),
+                      [hh, ':', nn, " ", am]).toString() +
+                      " - " +
+                      formatDate(
+                          DateTime(2019, 08, 1, event.endTime.hour, event.endTime.minute),
+                          [hh, ':', nn, " ", am]).toString()),
                 ],
               ),
             ),

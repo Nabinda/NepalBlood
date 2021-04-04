@@ -97,7 +97,7 @@ class _EventDateTimeState extends State<EventDateTime> {
                 2019, 08, 1, selectedStartTime.hour, selectedStartTime.minute),
             [hh, ':', nn, " ", am]).toString();
       });
-      Provider.of<EventProvider>(context,listen: false).uStartTime=_startTimeController.text;
+      Provider.of<EventProvider>(context,listen: false).uStartTime=selectedStartTime;
     }
   }
   Future<Null> _selectEndTime(BuildContext context) async {
@@ -117,7 +117,7 @@ class _EventDateTimeState extends State<EventDateTime> {
             DateTime(2019, 08, 1, selectedEndTime.hour, selectedEndTime.minute),
             [hh, ':', nn, " ", am]).toString();
       });
-      Provider.of<EventProvider>(context,listen: false).uEndTime=_endTimeController.text;
+      Provider.of<EventProvider>(context,listen: false).uEndTime=selectedEndTime;
     }
   }
   @override
