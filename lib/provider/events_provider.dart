@@ -1,7 +1,7 @@
 import 'package:bloodnepal/model/event_model.dart';
+import 'package:bloodnepal/model/notification_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class EventProvider with ChangeNotifier {
   DateTime startDate = DateTime.now();
@@ -9,6 +9,10 @@ class EventProvider with ChangeNotifier {
   TimeOfDay startTime = TimeOfDay(hour: 00, minute: 00);
   TimeOfDay endTime = TimeOfDay(hour: 00, minute: 00);
   List<EventModel> _eventList = [];
+  List<NotificationModel> _notificationList = [];
+  List<NotificationModel> getNotifications() {
+    return [..._notificationList];
+  }
   List<EventModel> getEvents() {
     return [..._eventList];
   }
@@ -34,7 +38,6 @@ class EventProvider with ChangeNotifier {
   }
 
   EventModel findEventById(String id) {
-
     return _eventList.firstWhere((event) => event.id == id);
   }
 
@@ -60,6 +63,7 @@ class EventProvider with ChangeNotifier {
       "endTimeHour": endTime.hour,
       "endTimeMinute": endTime.minute,
     });
+    addNotification(title,  docRef.id, startDate, location);
     _eventList.add(EventModel(id: DateTime.now().toString(),
     title: title,
     description: description,
@@ -70,6 +74,22 @@ class EventProvider with ChangeNotifier {
     startTime: startTime,
     endTime: endTime,
     location: location));
+  }
+  Future<void> addNotification(String title, String id, DateTime date, String location,) async {
+    final docRef =  FirebaseFirestore.instance.collection('Notifications').doc();
+    await docRef.set({
+      "id": id,
+      "title": title,
+      "location": location,
+      "startDate": date,
+      "createdAt":DateTime.now()
+    });
+    _notificationList.add(
+        NotificationModel(
+            id: DateTime.now().toString(),
+            title: title,
+            date: date,
+            location: location));
   }
   Future<void> deleteEvent(String id) async{
     await FirebaseFirestore.instance.collection('Events').doc(id).delete();
@@ -105,5 +125,25 @@ class EventProvider with ChangeNotifier {
       }
       _eventList = fetchedEvent;
       notifyListeners();
+  }
+  Future<void> getNotificationDetail() async {
+    _notificationList = [];
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Notifications')
+        .orderBy('createdAt',descending: true)
+        .get();
+    final allData = querySnapshot.docs.map((e) => e.data()).toList();
+    List<NotificationModel> fetchedNotification = [];
+    for(int i = 0; i<allData.length;i++){
+      Timestamp timeInMillis = allData[i]['startDate'];
+      DateTime sDate = DateTime.parse(timeInMillis.toDate().toString());
+      fetchedNotification.add(NotificationModel(
+          id: allData[i]['id'].toString(),
+          title: allData[i]['title'],
+          date: sDate,
+          location: allData[i]['location']));
+    }
+    _notificationList = fetchedNotification;
+    notifyListeners();
   }
 }

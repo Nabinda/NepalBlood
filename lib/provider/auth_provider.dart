@@ -109,4 +109,19 @@ class AuthProvider extends ChangeNotifier {
   UserModel getCurrentUser(){
     return currentUser;
 }
+  Future<String> onSignOut() async{
+    String returnValue = "error";
+    try{
+      await _firebaseAuth.signOut();
+      userInfo = null;
+      currentUser = null;
+      final prefs = await SharedPreferences.getInstance();
+      prefs.clear();
+      notifyListeners();
+      returnValue = "success";
+    }catch(error){
+      print(error);
+    }
+    return returnValue;
+  }
 }

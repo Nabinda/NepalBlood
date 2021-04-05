@@ -1,4 +1,6 @@
+import 'package:bloodnepal/helper/loading_helper.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
+import 'package:bloodnepal/screens/login.dart';
 import 'package:bloodnepal/widgets/profile_image.dart';
 import 'package:bloodnepal/widgets/user_info.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,45 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isLoading = false;
+  void logOut() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String _returnValue = await Provider.of<AuthProvider>(
+        context, listen: false).onSignOut();
+    if (_returnValue == "success"){
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          LoginScreen.routeName, (Route<dynamic> route) => false);
+    }
+    else{
+      setState(() {
+        _isLoading = false;
+      });
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Something went wrong. Please try again later!'),
+              actions: <Widget>[
+                new TextButton(
+                    child: new Text('OK'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
+            );
+          });
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final userInfo = Provider.of<AuthProvider>(context,listen: false).getCurrentUser();
@@ -15,8 +55,15 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: style.CustomTheme.themeColor,
         title: Text("PROFILE"),
         centerTitle: true,
+        actions: [
+          IconButton(icon: Icon(Icons.logout,color: Colors.white,), onPressed: logOut)
+        ],
       ),
-      body: Column(
+      body: _isLoading?
+          Container(
+              height: 500,
+              child: Center(child: LoadingHelper(loadingText: "Logging Out")))
+          :Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 20,),

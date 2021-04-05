@@ -92,8 +92,8 @@ class _AddEventsScreenState extends State<AddEventsScreen> {
                             _title = value;
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[a-zA-Z]')),
+                            FilteringTextInputFormatter.deny(
+                                RegExp('[0-9!@#%^&*(){}]')),
                           ],
                           validator: (value) {
                             if (value.length < 2) {
