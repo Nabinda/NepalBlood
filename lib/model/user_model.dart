@@ -12,6 +12,7 @@ class UserModel {
   String role;
   String lat;
   String long;
+  String imageUrl;
   UserModel(
       {@required this.uid,
       @required this.firstName,
@@ -21,6 +22,7 @@ class UserModel {
       @required this.role,
       @required this.lat,
       @required this.long,
+      @required this.imageUrl,
       this.status,
       @required this.email,
       this.bloodGroup});

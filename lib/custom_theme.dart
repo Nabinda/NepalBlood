@@ -19,6 +19,12 @@ class CustomTheme{
       fontSize: 40,
       fontWeight: FontWeight.w500
   );
+  static const TextStyle boldHeader = TextStyle(
+      color: Colors.black,
+      fontFamily: 'Roboto',
+      fontSize: 18,
+      fontWeight: FontWeight.w900
+  );
   static const TextStyle buttonText = TextStyle(
       color: Colors.white,
       fontFamily: 'Roboto',

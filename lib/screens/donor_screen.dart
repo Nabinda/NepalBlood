@@ -25,7 +25,7 @@ class _DonorScreenState extends State<DonorScreen> {
         builder: (ctx) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter stateSetter) {
-              return Container(
+              return _isLoading?Center(child: LoadingHelper(loadingText: "Wait a minute")):Container(
                 height: MediaQuery.of(context).size.height*0.4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -118,7 +118,7 @@ class _DonorScreenState extends State<DonorScreen> {
         title: Text("Become Donor"),
       ),
       body: SingleChildScrollView(
-        child: _isLoading?Center(child: LoadingHelper(loadingText: "Wait a minute")):Container(
+        child:Container(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

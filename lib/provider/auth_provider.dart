@@ -17,6 +17,7 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot docs) {
       userInfo = docs.data();
+      print(userInfo["Image_URL"]);
       currentUser = UserModel(
           uid: userInfo['User_Id'],
           firstName: userInfo["First_Name"],
@@ -26,6 +27,7 @@ class AuthProvider extends ChangeNotifier {
           role: userInfo["Role"],
           lat: userInfo["Latitude"],
           long: userInfo["Longitude"],
+          imageUrl: userInfo["Image_URL"],
           bloodGroup: userInfo["Blood_Group"],
           status: userInfo["Status"],
           email: userInfo["Email"]);
@@ -38,6 +40,20 @@ class AuthProvider extends ChangeNotifier {
       "Email_verification":"true"
     }).catchError((error){
       print("Error on Updating Verification:"+error.toString());
+    });
+  }
+  Future<void> updateUserInfo(String key,String value) async{
+    await FirebaseFirestore.instance.collection('Users').doc(currentUser.uid).update({
+      key:value
+    }).catchError((error){
+      print("Error on Updating Verification:"+error.toString());
+    });
+  }
+  Future<void> updateUserphoto(String imageURL) async{
+    await FirebaseFirestore.instance.collection('Users').doc(currentUser.uid).update({
+      "Image_URL": imageURL
+    }).catchError((error){
+      print("Error on Updating ImageURL:"+error.toString());
     });
   }
   Future<void> updateBloodGroup(String bloodGroup) async{
@@ -67,6 +83,7 @@ class AuthProvider extends ChangeNotifier {
       "Blood_Group":userModel.bloodGroup,
       "Status":userModel.status,
       "Email_verification": user.emailVerified,
+      "Image_URL": "https://firebasestorage.googleapis.com/v0/b/nepal-blood-123.appspot.com/o/default_profile.png?alt=media&token=529650be-828d-42ba-bc43-7b9fcc2c5503"
     });
   }
   void addToPrefs() async{

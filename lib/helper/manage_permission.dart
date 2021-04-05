@@ -18,4 +18,13 @@ class ManagePermission{
       return true;
     }
   }
+  static Future<bool> isCameraPermissionGranted() async{
+    var status = await Permission.storage.status;
+    if(!status.isGranted){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 }

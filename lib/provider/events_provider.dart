@@ -34,7 +34,7 @@ class EventProvider with ChangeNotifier {
   }
 
   EventModel findEventById(String id) {
-    notifyListeners();
+
     return _eventList.firstWhere((event) => event.id == id);
   }
 
@@ -45,8 +45,9 @@ class EventProvider with ChangeNotifier {
     String contact,
     String email,
   ) async {
-    await FirebaseFirestore.instance.collection('Events').doc().set({
-      "id": DateTime.now(),
+    final docRef =  FirebaseFirestore.instance.collection('Events').doc();
+    await docRef.set({
+      "id": docRef.id,
       "title": title,
       "description": description,
       "location": location,
@@ -69,6 +70,9 @@ class EventProvider with ChangeNotifier {
     startTime: startTime,
     endTime: endTime,
     location: location));
+  }
+  Future<void> deleteEvent(String id) async{
+    await FirebaseFirestore.instance.collection('Events').doc(id).delete();
   }
 
   Future<void> getEventDetail() async {
