@@ -1,20 +1,22 @@
 import 'package:bloodnepal/helper/loading_helper.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
+import 'package:bloodnepal/provider/blood_requests_provider.dart';
 import 'package:bloodnepal/provider/events_provider.dart';
 import 'package:bloodnepal/screens/add_events.dart';
 import 'package:bloodnepal/screens/blood_bank.dart';
+import 'package:bloodnepal/screens/blood_requests.dart';
 import 'package:bloodnepal/screens/bottom_bar_screen.dart';
 import 'package:bloodnepal/screens/donor_screen.dart';
 import 'package:bloodnepal/screens/events.dart';
 import 'package:bloodnepal/screens/events_detail_screen.dart';
 import 'package:bloodnepal/screens/login.dart';
+import 'package:bloodnepal/screens/request_blood.dart';
 import 'package:bloodnepal/screens/search_screen.dart';
 import 'package:bloodnepal/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
-import 'custom_theme.dart' as style;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +31,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => EventProvider())
+        ChangeNotifierProvider(create: (_) => EventProvider()),
+        ChangeNotifierProvider(create: (_) => BloodRequestsProvider()),
       ],
       child: MaterialApp(
 
@@ -47,6 +50,8 @@ class MyApp extends StatelessWidget {
           DonorScreen.routeName: (ctx) => DonorScreen(),
           EventsDetailScreen.routeName: (ctx) => EventsDetailScreen(),
           AddEventsScreen.routeName: (ctx) => AddEventsScreen(),
+          BloodRequests.routeName: (ctx) => BloodRequests(),
+          RequestBlood.routeName: (ctx) => RequestBlood(),
         },
       ),
     );

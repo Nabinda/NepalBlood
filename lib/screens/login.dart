@@ -2,7 +2,6 @@ import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/screens/bottom_bar_screen.dart';
 import 'package:bloodnepal/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_clipper.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;

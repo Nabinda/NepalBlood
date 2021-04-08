@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:bloodnepal/provider/events_provider.dart';
-import 'package:bloodnepal/screens/add_events.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

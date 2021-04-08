@@ -89,7 +89,7 @@ class _ProfileImageState extends State<ProfileImage> {
                ),
                title: Text("Your Profile picture has been updated"),
                actions: <Widget>[
-                 FlatButton(
+                 TextButton(
                      child: Text("OK"),
                      onPressed: () {
                        Navigator.pop(context);

@@ -1,5 +1,4 @@
 import 'package:bloodnepal/provider/auth_provider.dart';
-import 'package:bloodnepal/provider/events_provider.dart';
 import 'package:bloodnepal/screens/home_screen.dart';
 import 'package:bloodnepal/screens/notification_screen.dart';
 import 'package:bloodnepal/screens/profile_screen.dart';

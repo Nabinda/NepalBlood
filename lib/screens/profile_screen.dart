@@ -105,9 +105,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: Text("Status:"+userInfo.status),
             ),
-          ):null,
+          ):Container(),
           userInfo.role=="Donor"?
-          SizedBox(height: 10.0,):null,
+          SizedBox(height: 10.0,):Container(),
           userInfo.role=="Donor"?
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -116,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(15.0)
             ),
             child: Text("Blood Group:"+userInfo.bloodGroup),
-          ):null,
+          ):Container(),
           userInfo.status!=null?
           SizedBox(height: 20,):null,
           Text(userInfo.firstName+" "+userInfo.lastName,style: style.CustomTheme.eventHeader,),

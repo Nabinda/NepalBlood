@@ -59,6 +59,7 @@ dependencies:
   flutter_phoenix: ^1.0.0
   #image_picker
   image_picker: ^0.7.4
+  http: ^0.13.1
 
 
 dev_dependencies:

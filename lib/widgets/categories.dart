@@ -1,7 +1,9 @@
 import 'package:bloodnepal/screens/add_events.dart';
 import 'package:bloodnepal/screens/blood_bank.dart';
+import 'package:bloodnepal/screens/blood_requests.dart';
 import 'package:bloodnepal/screens/donor_screen.dart';
 import 'package:bloodnepal/screens/events.dart';
+import 'package:bloodnepal/screens/request_blood.dart';
 import 'package:bloodnepal/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
@@ -15,6 +17,9 @@ class Categories extends StatelessWidget{
       Cat("Events Nearby", "events.png",Events.routeName),
       Cat("Find a Donor", "search.png",SearchScreen.routeName),
       Cat("Blood Bank", "blood-bank.png",BloodBankScreen.routeName),
+      Cat("Request Blood", "request.png",RequestBlood.routeName),
+      if(role=="Donor" || role == "Admin")
+        Cat("Blood Requests", "top.png", BloodRequests.routeName),
       if(role=="Seeker")
       Cat("Become a Donor", "donor.png",DonorScreen.routeName),
       if(role=="Admin")
