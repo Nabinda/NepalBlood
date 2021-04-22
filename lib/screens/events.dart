@@ -1,3 +1,4 @@
+import 'package:bloodnepal/model/event_model.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/provider/events_provider.dart';
 import 'package:bloodnepal/screens/events_detail_screen.dart';
@@ -63,6 +64,7 @@ class _EventsState extends State<Events> {
   Widget build(BuildContext context) {
     final events =
         Provider.of<EventProvider>(context, listen: false).getEvents();
+    List<EventModel> eventToDisplayed = events.where((event) => DateTime.now().difference(event.endDate).isNegative).toList();
     final currentUser =
         Provider.of<AuthProvider>(context, listen: false).getCurrentUser();
     return Scaffold(
@@ -109,13 +111,12 @@ class _EventsState extends State<Events> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              if (DateTime.now().difference(events[index].endDate).isNegative) {
                 return Container(
                   height: 70,
                   child: InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, EventsDetailScreen.routeName,
-                          arguments: events[index].id);
+                          arguments: eventToDisplayed[index].id);
                     },
                     child: ListTile(
                       tileColor: (index % 2 == 0)
@@ -126,10 +127,10 @@ class _EventsState extends State<Events> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           if (!DateTime.now()
-                              .difference(events[index].startDate)
+                              .difference(eventToDisplayed[index].startDate)
                               .isNegative)
                             Text("On Going Events"),
-                          if (events[index].startDate.day -
+                          if (eventToDisplayed[index].startDate.day -
                                   DateTime.now().day ==
                               1)
                             Text(
@@ -137,8 +138,8 @@ class _EventsState extends State<Events> {
                               style: style.CustomTheme.boldHeader,
                             ),
                           Text(dfh.DateFormatHelper.eventDate
-                              .format(events[index].startDate)),
-                          Text(events[index].title),
+                              .format(eventToDisplayed[index].startDate)),
+                          Text(eventToDisplayed[index].title),
                         ],
                         //Text
                       ), //Center
@@ -146,15 +147,13 @@ class _EventsState extends State<Events> {
                           ? IconButton(
                               icon: Icon(Icons.delete),
                               color: style.CustomTheme.themeColor,
-                              onPressed: (){confirmDelete(events[index].id);})
+                              onPressed: (){confirmDelete(eventToDisplayed[index].id);})
                           : null,
                     ),
                   ),
                 );
-              }
-              return null;
             }, //ListTile
-            childCount: events.length,
+            childCount: eventToDisplayed.length,
           ), //SliverChildBuildDelegate
         )
       ]),

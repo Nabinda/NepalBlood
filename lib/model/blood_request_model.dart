@@ -23,4 +23,16 @@ class BloodRequestModel{
     @required this.donorId,
     @required this.location}
       );
+    
+  BloodRequestModel.fromJson(Map<String, dynamic> parsedJSON):
+    id = parsedJSON['id'],
+    name = parsedJSON['name'],
+    patientName = parsedJSON['patientName'],
+    contact = parsedJSON['contact'],
+    date = parsedJSON['date'],
+    time = parsedJSON['time'],
+    bloodGroup = parsedJSON['bloodGroup'],
+    location = parsedJSON['location'],
+    status = parsedJSON['status'],
+    donorId = parsedJSON['donorId'];
 }

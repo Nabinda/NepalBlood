@@ -14,6 +14,7 @@ class EventProvider with ChangeNotifier {
     return [..._notificationList];
   }
   List<EventModel> getEvents() {
+    print("Get events");
     return [..._eventList];
   }
 
@@ -96,6 +97,7 @@ class EventProvider with ChangeNotifier {
   }
 
   Future<void> getEventDetail() async {
+    print("fetch event");
     _eventList = [];
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('Events')
