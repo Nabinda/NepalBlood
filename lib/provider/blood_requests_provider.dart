@@ -16,7 +16,7 @@ class BloodRequestsProvider extends ChangeNotifier {
       "bloodGroup": bloodGroup,
       "date": date,
       "timeHour": time.hour,
-      "timeMinute": time.minute,
+      "timeMinute": time.minute.toString(),
       "status": "Pending",
       "donorId":null
     });

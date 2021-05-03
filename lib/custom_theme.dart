@@ -31,6 +31,12 @@ class CustomTheme{
       fontSize: 16,
       fontWeight: FontWeight.w500
   );
+  static const TextStyle blackButtonText = TextStyle(
+      color: themeColor,
+      fontFamily: 'Roboto',
+      fontSize: 16,
+      fontWeight: FontWeight.w500
+  );
   static const TextStyle headerBlackRoboto = TextStyle(
       fontFamily: 'Roboto',
       fontStyle: FontStyle.italic,

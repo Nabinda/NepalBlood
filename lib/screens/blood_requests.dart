@@ -1,3 +1,4 @@
+import 'package:bloodnepal/helper/loading_helper.dart';
 import 'package:bloodnepal/model/blood_request_model.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/provider/blood_requests_provider.dart';
@@ -17,70 +18,113 @@ class BloodRequests extends StatefulWidget {
 }
 
 class _BloodRequestsState extends State<BloodRequests> {
-  Stream<List<BloodRequestModel>> getBloodRequest(){
-    return FirebaseFirestore.instance.collection('Blood-Request').snapshots().map((snapShot)=>snapShot.docs.map((e) => BloodRequestModel.fromJson(e.data())).toList());
+  _confirm(String id,String donorId) async{
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Are You Sure?'),
+            actions: <Widget>[
+              new TextButton(
+                  child: new Text('No'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              new TextButton(
+                  child: new Text('Yes'),
+                  onPressed: () {
+                    Provider.of<BloodRequestsProvider>(context,listen: false).updateStatus(id,donorId).whenComplete(()=>complete);
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+  });
   }
-  // _confirm(String id,String donorId) async{
-  //   return showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text('Are You Sure?'),
-  //           actions: <Widget>[
-  //             new TextButton(
-  //                 child: new Text('No'),
-  //                 onPressed: () {
-  //                   Navigator.pop(context);
-  //                 }),
-  //             new TextButton(
-  //                 child: new Text('Yes'),
-  //                 onPressed: () {
-  //                   Provider.of<BloodRequestsProvider>(context,listen: false).updateStatus(id,donorId).whenComplete(()=>complete);
-  //                   Navigator.pop(context);
-  //                 }),
-  //           ],
-  //         );
-  // });
-  // }
-  // complete() async{
-  //   return showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: Text('Donation Request Accepted. \n Do you want to add on reminder?'),
-  //           actions: <Widget>[
-  //             new TextButton(
-  //                 child: new Text('No'),
-  //                 onPressed: () {
-  //                   Navigator.pop(context);
-  //                   Phoenix.rebirth(context);
-  //                 }),
-  //             new TextButton(
-  //                 child: new Text('Yes'),
-  //                 onPressed: () {
-  //                   Navigator.pop(context);
-  //                 }),
-  //           ],
-  //         );
-  //       });
-  // }
+  complete() async{
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Donation Request Accepted. \n Do you want to add on reminder?'),
+            actions: <Widget>[
+              new TextButton(
+                  child: new Text('No'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Phoenix.rebirth(context);
+                  }),
+              new TextButton(
+                  child: new Text('Yes'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+        });
+  }
   @override
   Widget build(BuildContext context) {
-  List donorList = Provider.of<List<BloodRequestModel>>(context);
     final userInfo = Provider.of<AuthProvider>(context,listen: false).currentUser;
-    final requestList =
-    Provider.of<BloodRequestsProvider>(context, listen: false).getBloodRequest();
-    final pendingRequest = requestList.where((element) => element.status=="Pending").toList();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: style.CustomTheme.themeColor,
         title: Text("Blood Requests"),
       ),
-      body: StreamProvider(
-        create: (BuildContext context)=>getBloodRequest(),
-        initialData: [Text("Loading")],
-        child: Text(donorList[0].name),
-      ) 
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection("Blood-Request").snapshots(),
+        builder: (context,snapshot){
+          if(!snapshot.hasData){
+            return Text("No Data Found");
+          }else{
+            print(snapshot.data.docs[0]["name"]);
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 5.0),
+              child: ListView.builder(itemCount: snapshot.data.docs.length,itemBuilder:(BuildContext context,index){
+                DocumentSnapshot ds = snapshot.data.docs[index];
+                Timestamp timeInMillis = ds['date'];
+                DateTime date = DateTime.parse(timeInMillis.toDate().toString());
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 5.0),
+                  decoration: BoxDecoration(
+                    color: index%2==0?Colors.white:style.CustomTheme.themeColor,
+                    borderRadius: BorderRadius.circular(15.0)
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Name: "+ds["name"],style: style.CustomTheme.normalText,),
+                      Text("Patient Name: "+ds["patientName"],style: style.CustomTheme.normalText,),
+                      Text("Contact: "+ds["contact"],style: style.CustomTheme.normalText,),
+                      Text("Location: "+ds["location"],style: style.CustomTheme.normalText,),
+                      Text("Blood Group: "+ds["bloodGroup"],style: style.CustomTheme.normalText,),
+                      Text("Date: "+dfh.DateFormatHelper.eventDate.format(date),style: style.CustomTheme.normalText,),
+                      Text("Time: "+ds["timeHour"].toString()+":"+ds["timeMinute"],style: style.CustomTheme.normalText,),
+                      GestureDetector(
+                        onTap: () {
+
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(
+                              top: 20, left: 30, right: 30, bottom: 10),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: index%2==0?style.CustomTheme.themeColor:Colors.white,
+                          ),
+                          child: Text(
+                            'Accept',
+                            style: index%2==0?style.CustomTheme.buttonText:style.CustomTheme.blackButtonText,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            );
+          }
+        },
+      ),
     );
   }
 }
