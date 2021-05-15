@@ -87,7 +87,6 @@ class AuthProvider extends ChangeNotifier {
     });
   }
   void addToPrefs() async{
-    print("I am Here");
     print(currentUser.uid);
     final userData = json.encode({
       "userId":currentUser.uid,

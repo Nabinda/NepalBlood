@@ -1,12 +1,12 @@
-import 'package:bloodnepal/helper/loading_helper.dart';
-import 'package:bloodnepal/model/blood_request_model.dart';
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/provider/blood_requests_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart'as style;
-import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:bloodnepal/helper/manage_permission.dart' as mp;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:bloodnepal/helper/date_format_helper.dart' as dfh;
 
@@ -18,6 +18,12 @@ class BloodRequests extends StatefulWidget {
 }
 
 class _BloodRequestsState extends State<BloodRequests> {
+  String name;
+  String location;
+  DateTime dateTime;
+  String hour;
+  String minute;
+  String description;
   _confirm(String id,String donorId) async{
     return showDialog(
         context: context,
@@ -33,7 +39,7 @@ class _BloodRequestsState extends State<BloodRequests> {
               new TextButton(
                   child: new Text('Yes'),
                   onPressed: () {
-                    Provider.of<BloodRequestsProvider>(context,listen: false).updateStatus(id,donorId).whenComplete(()=>complete);
+                    Provider.of<BloodRequestsProvider>(context,listen: false).updateStatus(id,donorId).whenComplete(()=>complete());
                     Navigator.pop(context);
                   }),
             ],
@@ -51,16 +57,44 @@ class _BloodRequestsState extends State<BloodRequests> {
                   child: new Text('No'),
                   onPressed: () {
                     Navigator.pop(context);
-                    Phoenix.rebirth(context);
                   }),
               new TextButton(
                   child: new Text('Yes'),
                   onPressed: () {
-                    Navigator.pop(context);
+                   _addReminder(context);
                   }),
             ],
           );
         });
+  }
+  _addReminder( BuildContext context) async {
+    bool status = await mp.ManagePermission.isCalendarPermissionGranted();
+    if (status) {
+      Event event = Event(
+        title: "Blood Donation to $name",
+        location: location,
+        endDate: dateTime.add(Duration(hours:int.parse(hour),minutes: int.parse(minute) )),
+        startDate: dateTime.add(Duration(hours:int.parse(hour),minutes: int.parse(minute) )),
+        description: description,
+      );
+      Add2Calendar.addEvent2Cal(event, androidNoUI: false);
+    } else {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Calendar permission required to add reminder'),
+              actions: <Widget>[
+                new TextButton(
+                    child: new Text('OK'),
+                    onPressed: () {
+                      openAppSettings();
+                      Navigator.pop(context);
+                    })
+              ],
+            );
+          });
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -76,13 +110,13 @@ class _BloodRequestsState extends State<BloodRequests> {
           if(!snapshot.hasData){
             return Text("No Data Found");
           }else{
-            print(snapshot.data.docs[0]["name"]);
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 5.0),
               child: ListView.builder(itemCount: snapshot.data.docs.length,itemBuilder:(BuildContext context,index){
                 DocumentSnapshot ds = snapshot.data.docs[index];
                 Timestamp timeInMillis = ds['date'];
                 DateTime date = DateTime.parse(timeInMillis.toDate().toString());
+                if (DateTime.now().difference(date).isNegative && ds['status'] != "Accepted")
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 5.0),
                   decoration: BoxDecoration(
@@ -101,7 +135,13 @@ class _BloodRequestsState extends State<BloodRequests> {
                       Text("Time: "+ds["timeHour"].toString()+":"+ds["timeMinute"],style: style.CustomTheme.normalText,),
                       GestureDetector(
                         onTap: () {
-
+                          name = ds['patientName'];
+                          location = ds['location'];
+                          dateTime = date;
+                          hour = ds["timeHour"].toString();
+                          minute = ds["timeMinute"].toString();
+                          description = "Blood Group:"+ds["bloodGroup"];
+                            _confirm(ds['id'], userInfo.uid);
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -120,6 +160,8 @@ class _BloodRequestsState extends State<BloodRequests> {
                     ],
                   ),
                 );
+                else
+                  return Container();
               }),
             );
           }
