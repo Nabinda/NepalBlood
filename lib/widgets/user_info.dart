@@ -1,14 +1,14 @@
-import 'package:bloodnepal/model/user_model.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 import 'package:flutter/services.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 
 class UserInfo extends StatefulWidget {
-  final UserModel user;
-  UserInfo(this.user);
+  final String contact;
+  final String email;
+  final String location;
+  UserInfo({@required this.contact,@required this.email,@required this.location});
 
   @override
   _UserInfoState createState() => _UserInfoState();
@@ -19,7 +19,6 @@ class _UserInfoState extends State<UserInfo> {
 
   void updateNumber(String contact){
     Provider.of<AuthProvider>(context,listen: false).updateUserInfo("Contact", contact);
-    Phoenix.rebirth(context);
   }
 
   void displayBottomSheet(BuildContext context) {
@@ -124,7 +123,7 @@ class _UserInfoState extends State<UserInfo> {
                     Icons.phone,
                     color: style.CustomTheme.themeColor,
                   ),
-                  title: Text("+977-"+widget.user.contactNo),
+                  title: Text("+977-"+widget.contact),
                   tileColor: style.CustomTheme.themeColor.withOpacity(0.5))),
         ),
         Container(
@@ -135,7 +134,7 @@ class _UserInfoState extends State<UserInfo> {
                   Icons.email,
                   color: style.CustomTheme.themeColor,
                 ),
-                title: Text(widget.user.email),
+                title: Text(widget.email),
                 tileColor: style.CustomTheme.themeColor.withOpacity(0.5))),
         Container(
             width: MediaQuery.of(context).size.width * 0.8,
@@ -145,7 +144,7 @@ class _UserInfoState extends State<UserInfo> {
                   Icons.location_pin,
                   color: style.CustomTheme.themeColor,
                 ),
-                title: Text(widget.user.location),
+                title: Text(widget.location),
                 tileColor: style.CustomTheme.themeColor.withOpacity(0.5))),
       ],
     );

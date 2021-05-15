@@ -1,6 +1,8 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:bloodnepal/model/user_model.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/provider/blood_requests_provider.dart';
+import 'package:bloodnepal/widgets/user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class BloodRequests extends StatefulWidget {
 }
 
 class _BloodRequestsState extends State<BloodRequests> {
+  UserModel currentUser;
   String name;
   String location;
   DateTime dateTime;
@@ -47,6 +50,7 @@ class _BloodRequestsState extends State<BloodRequests> {
   });
   }
   complete() async{
+    Provider.of<AuthProvider>(context,listen: false).updateUserInfo("Status","Inactive");
     return showDialog(
         context: context,
         builder: (context) {
@@ -78,6 +82,7 @@ class _BloodRequestsState extends State<BloodRequests> {
         description: description,
       );
       Add2Calendar.addEvent2Cal(event, androidNoUI: false);
+
     } else {
       return showDialog(
           context: context,
@@ -96,6 +101,7 @@ class _BloodRequestsState extends State<BloodRequests> {
           });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final userInfo = Provider.of<AuthProvider>(context,listen: false).currentUser;
@@ -141,6 +147,7 @@ class _BloodRequestsState extends State<BloodRequests> {
                           hour = ds["timeHour"].toString();
                           minute = ds["timeMinute"].toString();
                           description = "Blood Group:"+ds["bloodGroup"];
+                          currentUser = userInfo;
                             _confirm(ds['id'], userInfo.uid);
                         },
                         child: Container(

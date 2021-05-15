@@ -38,7 +38,8 @@ class _SignUpFormState extends State<SignUpForm> {
   bool _isSigning = false;
   bool hideCon = true;
   bool _isLoading = false;
-  String location = "Location";
+  String localLocation = "Location";
+  String district = "Location";
   UserModel _newUser;
   String _firstName;
   String _lastName;
@@ -62,7 +63,8 @@ class _SignUpFormState extends State<SignUpForm> {
           firstName: _firstName,
           lastName: _lastName,
           contactNo: _contactNo,
-          location: location,
+          district: district,
+          localLocation: localLocation,
           role: "Seeker",
           email: _email);
       Provider.of<AuthProvider>(context,listen: false).addUserInfo(_newUser);
@@ -122,7 +124,8 @@ class _SignUpFormState extends State<SignUpForm> {
       _long = position.longitude.toString();
       _lat = position.latitude.toString();
       setState(() {
-        location = placemarks[1].name + "," + placemarks[3].name;
+        localLocation = placemarks[1].name;
+        district =placemarks[3].name;
         _isLoading = false;
       });
     }
@@ -286,7 +289,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               _getLocation(context);
                             },
                           ),
-                          hintText: location,
+                          hintText: localLocation+", "+district,
                           prefixIcon:  Icon(Icons.location_pin,color: style.CustomTheme.themeColor,)),
                     ),
                   ),

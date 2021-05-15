@@ -5,7 +5,8 @@ class UserModel {
   String firstName;
   String lastName;
   String contactNo;
-  String location;
+  String localLocation;
+  String district;
   String bloodGroup;
   String status;
   String email;
@@ -18,7 +19,8 @@ class UserModel {
       @required this.firstName,
       @required this.lastName,
       @required this.contactNo,
-      @required this.location,
+      @required this.localLocation,
+      @required this.district,
       @required this.role,
       @required this.lat,
       @required this.long,

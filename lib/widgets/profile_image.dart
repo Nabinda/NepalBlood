@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
 class ProfileImage extends StatefulWidget {
+  final String imageUrl;
+  ProfileImage(this.imageUrl);
   @override
   _ProfileImageState createState() => _ProfileImageState();
 }
@@ -107,8 +109,6 @@ class _ProfileImageState extends State<ProfileImage> {
 
   @override
   Widget build(BuildContext context) {
-    var user =Provider.of<AuthProvider>(context,listen: false).getCurrentUser();
-    print(user.firstName);
     return Stack(
       children: [
         isLoading
@@ -120,7 +120,7 @@ class _ProfileImageState extends State<ProfileImage> {
             width: 130,
             child: image == null
                 ? Image.network(
-            user.imageUrl
+            widget.imageUrl
             ,fit: BoxFit.cover,
             )
                 : Image.file(
