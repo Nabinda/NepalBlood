@@ -49,7 +49,11 @@ class _SignUpFormState extends State<SignUpForm> {
   String _lat;
   Future<void> verification() async {
     var user = FirebaseAuth.instance.currentUser;
-     user.sendEmailVerification().then((push) {
+     user.sendEmailVerification().onError((error, stackTrace){
+       setState(() {
+         _isLoading = false;
+       });
+     }).then((push) {
       setState(() {
         _isLoading = false;
       });
@@ -125,7 +129,7 @@ class _SignUpFormState extends State<SignUpForm> {
       _lat = position.latitude.toString();
       setState(() {
         localLocation = placemarks[1].name;
-        district =placemarks[3].name;
+        district =placemarks[1].subAdministrativeArea;
         _isLoading = false;
       });
     }

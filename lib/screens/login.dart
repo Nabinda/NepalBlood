@@ -1,5 +1,6 @@
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/screens/bottom_bar_screen.dart';
+import 'package:bloodnepal/screens/reset_password_screen.dart';
 import 'package:bloodnepal/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -240,6 +241,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
+                        InkWell(
+                          onTap:(){
+                            Navigator.pushNamed(context, ResetPasswordScreen.routeName);
+                          },
+                          child: Text(
+                            'Forgot Password ?',
+                            style: style.CustomTheme.kTextGreyStyle,
+                          ),
+                        ),
+                        SizedBox(height: 20,),
                         Text(
                           'Do not have account ?',
                           style: style.CustomTheme.kTextGreyStyle,

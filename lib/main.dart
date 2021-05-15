@@ -11,6 +11,7 @@ import 'package:bloodnepal/screens/events.dart';
 import 'package:bloodnepal/screens/events_detail_screen.dart';
 import 'package:bloodnepal/screens/login.dart';
 import 'package:bloodnepal/screens/request_blood.dart';
+import 'package:bloodnepal/screens/reset_password_screen.dart';
 import 'package:bloodnepal/screens/search_screen.dart';
 import 'package:bloodnepal/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
           AddEventsScreen.routeName: (ctx) => AddEventsScreen(),
           BloodRequests.routeName: (ctx) => BloodRequests(),
           RequestBlood.routeName: (ctx) => RequestBlood(),
+          ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
         },
       ),
     );
