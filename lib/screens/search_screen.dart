@@ -196,7 +196,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Container(
               height: 250,
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('Users').where("Status",isEqualTo: "Active").where("District",isEqualTo:selectedDistrict).where("Blood_Group",isEqualTo: selectedBloodGroup).snapshots(),
+                stream: FirebaseFirestore.instance.collection('Users').where("Role",isEqualTo: "Donor").where("Status",isEqualTo: "Active").where("District",isEqualTo:selectedDistrict).where("Blood_Group",isEqualTo: selectedBloodGroup).snapshots(),
                 builder: (context,snapshot){
                   if(snapshot.hasData) {
                       if(snapshot.data.docs.length!=0) {

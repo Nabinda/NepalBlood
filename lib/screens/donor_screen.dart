@@ -13,7 +13,16 @@ class DonorScreen extends StatefulWidget {
 }
 
 class _DonorScreenState extends State<DonorScreen> {
-  final List<String> bloodGroupCategories = ["O+","O-","A+","A-","B+","B-","AB+","AB-"];
+  final List<String> bloodGroupCategories = [
+    "O+",
+    "O-",
+    "A+",
+    "A-",
+    "B+",
+    "B-",
+    "AB+",
+    "AB-"
+  ];
 
   String selectedBloodGroup = "O+";
   bool isChecked = false;
@@ -24,78 +33,87 @@ class _DonorScreenState extends State<DonorScreen> {
         context: context,
         builder: (ctx) {
           return StatefulBuilder(
-            builder: (BuildContext context, StateSetter stateSetter) {
-              return _isLoading?Center(child: LoadingHelper(loadingText: "Wait a minute")):Container(
-                height: MediaQuery.of(context).size.height*0.4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+              builder: (BuildContext context, StateSetter stateSetter) {
+            return _isLoading
+                ? Center(child: LoadingHelper(loadingText: "Wait a minute"))
+                : Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text("Select Blood Group:",style:TextStyle(fontSize: 16),),
-                        SizedBox(width: 20,),
-                        DropdownButton<String>(
-                          iconEnabledColor: style.CustomTheme.themeColor,
-                          dropdownColor: style.CustomTheme.themeColor,
-                          items: bloodGroupCategories.map((dropdownItem){
-                            return DropdownMenuItem<String>(
-                              value: dropdownItem,
-                              child: Text(dropdownItem),
-                            );
-                          }).toList(),
-                          value: selectedBloodGroup,
-                          onChanged: (value){
-                            stateSetter((){
-                              selectedBloodGroup = value;
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Select Blood Group:",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            DropdownButton<String>(
+                              iconEnabledColor: style.CustomTheme.themeColor,
+                              dropdownColor: style.CustomTheme.themeColor,
+                              items: bloodGroupCategories.map((dropdownItem) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownItem,
+                                  child: Text(dropdownItem),
+                                );
+                              }).toList(),
+                              value: selectedBloodGroup,
+                              onChanged: (value) {
+                                stateSetter(() {
+                                  selectedBloodGroup = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            Provider.of<AuthProvider>(context, listen: false)
+                                .updateBloodGroup(selectedBloodGroup)
+                                .then((_) {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              Phoenix.rebirth(context);
+                            }).catchError((error) {
+                              print(error);
                             });
                           },
+                          child: Container(
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(
+                                top: 20, left: 30, right: 30, bottom: 10),
+                            height: 50,
+                            decoration: style.CustomTheme.buttonDecoration,
+                            child: Text(
+                              'Submit',
+                              style: style.CustomTheme.buttonText,
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        Provider.of<AuthProvider>(context,listen: false).updateBloodGroup(selectedBloodGroup).then((_){
-                          setState(() {
-                            _isLoading = false;
-                          });
-                              Phoenix.rebirth(context);
-                        }).catchError((error){
-                          print(error);
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(
-                            top: 20, left: 30, right: 30, bottom: 10),
-                        height: 50,
-                        decoration: style.CustomTheme.buttonDecoration,
-                        child: Text(
-                          'Submit',
-                          style: style.CustomTheme.buttonText,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          );
+                  );
+          });
         });
   }
-  check(){
-    if(isChecked){
+
+  check() {
+    if (isChecked) {
       displayBottomSheet(context);
-    }
-    else{
+    } else {
       return showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Please read the instruction first and click the checkBox'),
+              title: Text(
+                  'Please read the instruction first and click the checkBox'),
               actions: <Widget>[
                 new TextButton(
                     child: new Text('OK'),
@@ -110,6 +128,7 @@ class _DonorScreenState extends State<DonorScreen> {
           });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,42 +137,88 @@ class _DonorScreenState extends State<DonorScreen> {
         title: Text("Become Donor"),
       ),
       body: SingleChildScrollView(
-        child:Container(
+        child: Container(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20,),
-              Text("Read this instruction carefully before becoming a donor:",style: style.CustomTheme.normalHeader,),
-              SizedBox(height: 10,),
-              Text("1. You must be above or 19 years to be a donor.",style: style.CustomTheme.eventHeader,),
-              SizedBox(height: 5,),
-              Text("2. Your weight must be minimum of 50 kg.",style: style.CustomTheme.eventHeader,),
-              SizedBox(height: 5,),
-              RichText(text:TextSpan(text: "3. You must be in good health, if you are not then switch your status to ",style: style.CustomTheme.eventHeader,children: [
-                TextSpan(text:"'Not Available'.",style: style.CustomTheme.normalHeader)
-              ]),),
-              SizedBox(height: 5,),
-              RichText(text: TextSpan(text:"4. If you are taking medicine you are not allowed to donate. So keep your status to ",style: style.CustomTheme.eventHeader,children: [
-                TextSpan(text:"'Not Available'  ",style: style.CustomTheme.normalHeader),
-                TextSpan(text:"in case you are taking medicine.",style:style.CustomTheme.eventHeader)
-              ], ),),
-              SizedBox(height: 5,),
-              Text("5. Once you donate blood you won't be able to donate within 56 days.",style:style.CustomTheme.eventHeader),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Read this instruction carefully before becoming a donor:",
+                style: style.CustomTheme.normalHeader,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "1. You must be above or 19 years to be a donor.",
+                style: style.CustomTheme.eventHeader,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "2. Your weight must be minimum of 50 kg.",
+                style: style.CustomTheme.eventHeader,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              RichText(
+                text: TextSpan(
+                    text:
+                        "3. You must be in good health, if you are not then switch your status to ",
+                    style: style.CustomTheme.eventHeader,
+                    children: [
+                      TextSpan(
+                          text: "'Not Available'.",
+                          style: style.CustomTheme.normalHeader)
+                    ]),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              RichText(
+                text: TextSpan(
+                  text:
+                      "4. If you are taking medicine you are not allowed to donate. So keep your status to ",
+                  style: style.CustomTheme.eventHeader,
+                  children: [
+                    TextSpan(
+                        text: "'Not Available'  ",
+                        style: style.CustomTheme.normalHeader),
+                    TextSpan(
+                        text: "in case you are taking medicine.",
+                        style: style.CustomTheme.eventHeader)
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                  "5. Once you donate blood you won't be able to donate within 56 days.",
+                  style: style.CustomTheme.eventHeader),
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Checkbox(
-                    autofocus: true,
-                    activeColor: style.CustomTheme.themeColor,
+                      autofocus: true,
+                      activeColor: style.CustomTheme.themeColor,
                       value: isChecked,
-                      onChanged: (_){
-                    setState(() {
-                      isChecked = !isChecked;
-                    });
-                  }),
-                  SizedBox(width: 5,),
+                      onChanged: (_) {
+                        setState(() {
+                          isChecked = !isChecked;
+                        });
+                      }),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Text("I have read all the instructions")
                 ],
               ),
@@ -161,8 +226,8 @@ class _DonorScreenState extends State<DonorScreen> {
                 onTap: check,
                 child: Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                      top: 20, left: 30, right: 30, bottom: 10),
+                  margin:
+                      EdgeInsets.only(top: 20, left: 30, right: 30, bottom: 10),
                   height: 50,
                   decoration: style.CustomTheme.buttonDecoration,
                   child: Text(
@@ -171,7 +236,6 @@ class _DonorScreenState extends State<DonorScreen> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),

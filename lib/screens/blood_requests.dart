@@ -2,7 +2,6 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:bloodnepal/model/user_model.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/provider/blood_requests_provider.dart';
-import 'package:bloodnepal/widgets/user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

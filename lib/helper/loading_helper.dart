@@ -13,8 +13,8 @@ class LoadingHelper extends StatelessWidget {
         children: [
           CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation<Color>(
-                style.CustomTheme.themeColor,
-              )),
+            style.CustomTheme.themeColor,
+          )),
           SizedBox(
             height: 20,
           ),

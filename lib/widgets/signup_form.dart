@@ -39,7 +39,7 @@ class _SignUpFormState extends State<SignUpForm> {
   bool hideCon = true;
   bool _isLoading = false;
   String localLocation = "Location";
-  String district = "Location";
+  String district = "District";
   UserModel _newUser;
   String _firstName;
   String _lastName;
@@ -122,7 +122,26 @@ class _SignUpFormState extends State<SignUpForm> {
         _isLoading = true;
       });
       final position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+          desiredAccuracy: LocationAccuracy.high).timeout(Duration(seconds: 5), onTimeout: () {
+        return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(
+                    'Failed to fetch the current Location. Please try again later.'),
+                actions: <Widget>[
+                  new TextButton(
+                      child: new Text('OK'),
+                      onPressed: () {
+                        setState(() {
+                          _isLoading = false;
+                        });
+                        Navigator.pop(context);
+                      })
+                ],
+              );
+            });
+      });
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
       _long = position.longitude.toString();
