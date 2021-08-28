@@ -114,7 +114,7 @@ class _TryAutoLoginState extends State<TryAutoLogin> {
       });
       final position = await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
-          .timeout(Duration(seconds: 5), onTimeout: () {
+          .timeout(Duration(seconds: 20), onTimeout: () {
         return showDialog(
             context: context,
             builder: (context) {
@@ -155,8 +155,13 @@ class _TryAutoLoginState extends State<TryAutoLogin> {
 
   void checkLogin() async {
     isLogin = await Provider.of<AuthProvider>(context).tryAutoLogin();
+    print("Login Value"+isLogin.toString());
     if (isLogin) {
       _getLocation(context);
+    }else{
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 

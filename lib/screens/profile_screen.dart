@@ -1,14 +1,10 @@
 import 'package:bloodnepal/helper/loading_helper.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
-import 'package:bloodnepal/screens/bottom_bar_screen.dart';
 import 'package:bloodnepal/screens/login.dart';
 import 'package:bloodnepal/widgets/profile_image.dart';
 import 'package:bloodnepal/widgets/user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
@@ -18,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<String> bloodGroupCategories = [
     "O+",
     "O-",
@@ -144,6 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userInfo =
         Provider.of<AuthProvider>(context, listen: false).getCurrentUser();
     return Scaffold(
+      key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: style.CustomTheme.themeColor,
           title: Text("PROFILE"),
@@ -199,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        userInfo.status != null
+                        userInfo.role == "Donor"
                             ? InkWell(
                                 onLongPress: () {
                                   showDialog(

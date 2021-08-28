@@ -1,7 +1,6 @@
 import 'package:bloodnepal/helper/loading_helper.dart';
 import 'package:bloodnepal/provider/auth_provider.dart';
 import 'package:bloodnepal/screens/bottom_bar_screen.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 import 'package:flutter/services.dart';
@@ -55,7 +54,7 @@ class _UserInfoState extends State<UserInfo> {
       });
       final position = await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
-          .timeout(Duration(seconds: 5), onTimeout: () {
+          .timeout(Duration(seconds: 20), onTimeout: () {
         return showDialog(
             context: context,
             builder: (context) {
@@ -85,6 +84,7 @@ class _UserInfoState extends State<UserInfo> {
         district = placemarks[1].subAdministrativeArea;
         _isLoading = false;
       });
+      print(localLocation +" " +district +" "+ lat +" "+ long);
       Provider.of<AuthProvider>(context, listen: false).updateUserLocation({
         "Local_Location": localLocation,
         "District": district,

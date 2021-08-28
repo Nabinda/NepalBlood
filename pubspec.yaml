@@ -31,7 +31,7 @@ dependencies:
   carousel_slider:
   salomon_bottom_bar:
   # To access Users Location
-  geolocator: ^7.0.1
+  geolocator: ^7.5.0
   geocoding: ^2.0.0
   # To add events on calendar
   add_2_calendar: ^2.0.1

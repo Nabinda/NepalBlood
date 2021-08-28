@@ -46,7 +46,6 @@ class _AddEventsScreenState extends State<AddEventsScreen> {
         ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
       }).then((_){
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Phoenix.rebirth(context);
       });
     }
     setState(() {

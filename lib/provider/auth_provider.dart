@@ -56,7 +56,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> updateUserLocation(Map<String, dynamic> map) async {
-    print(map);
     await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentUser.uid)

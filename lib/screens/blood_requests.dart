@@ -104,6 +104,7 @@ class _BloodRequestsState extends State<BloodRequests> {
   @override
   Widget build(BuildContext context) {
     final userInfo = Provider.of<AuthProvider>(context,listen: false).currentUser;
+    int themeColor = 0;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: style.CustomTheme.themeColor,
@@ -121,52 +122,84 @@ class _BloodRequestsState extends State<BloodRequests> {
                 DocumentSnapshot ds = snapshot.data.docs[index];
                 Timestamp timeInMillis = ds['date'];
                 DateTime date = DateTime.parse(timeInMillis.toDate().toString());
-                if (DateTime.now().difference(date).isNegative && ds['status'] != "Accepted")
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 5.0),
-                  decoration: BoxDecoration(
-                    color: index%2==0?Colors.white:style.CustomTheme.themeColor,
-                    borderRadius: BorderRadius.circular(15.0)
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Name: "+ds["name"],style: style.CustomTheme.normalText,),
-                      Text("Patient Name: "+ds["patientName"],style: style.CustomTheme.normalText,),
-                      Text("Contact: "+ds["contact"],style: style.CustomTheme.normalText,),
-                      Text("Location: "+ds["location"],style: style.CustomTheme.normalText,),
-                      Text("Blood Group: "+ds["bloodGroup"],style: style.CustomTheme.normalText,),
-                      Text("Date: "+dfh.DateFormatHelper.eventDate.format(date),style: style.CustomTheme.normalText,),
-                      Text("Time: "+ds["timeHour"].toString()+":"+ds["timeMinute"],style: style.CustomTheme.normalText,),
-                      GestureDetector(
-                        onTap: () {
-                          name = ds['patientName'];
-                          location = ds['location'];
-                          dateTime = date;
-                          hour = ds["timeHour"].toString();
-                          minute = ds["timeMinute"].toString();
-                          description = "Blood Group:"+ds["bloodGroup"];
-                          currentUser = userInfo;
-                            _confirm(ds['id'], userInfo.uid);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.only(
-                              top: 20, left: 30, right: 30, bottom: 10),
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: index%2==0?style.CustomTheme.themeColor:Colors.white,
-                          ),
-                          child: Text(
-                            'Accept',
-                            style: index%2==0?style.CustomTheme.buttonText:style.CustomTheme.blackButtonText,
-                          ),
+                if (DateTime.now().difference(date).isNegative && ds['status'] != "Accepted") {
+                  themeColor++;
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 5.0),
+                        decoration: BoxDecoration(
+                            color: themeColor % 2 == 0
+                                ? Colors.white
+                                : style.CustomTheme.themeColor,
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Name: " + ds["name"],
+                              style: style.CustomTheme.normalText,
+                            ),
+                            Text(
+                              "Patient Name: " + ds["patientName"],
+                              style: style.CustomTheme.normalText,
+                            ),
+                            Text(
+                              "Contact: " + ds["contact"],
+                              style: style.CustomTheme.normalText,
+                            ),
+                            Text(
+                              "Location: " + ds["location"],
+                              style: style.CustomTheme.normalText,
+                            ),
+                            Text(
+                              "Blood Group: " + ds["bloodGroup"],
+                              style: style.CustomTheme.normalText,
+                            ),
+                            Text(
+                              "Date: " +
+                                  dfh.DateFormatHelper.eventDate.format(date),
+                              style: style.CustomTheme.normalText,
+                            ),
+                            Text(
+                              "Time: " +
+                                  ds["timeHour"].toString() +
+                                  ":" +
+                                  ds["timeMinute"],
+                              style: style.CustomTheme.normalText,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                name = ds['patientName'];
+                                location = ds['location'];
+                                dateTime = date;
+                                hour = ds["timeHour"].toString();
+                                minute = ds["timeMinute"].toString();
+                                description = "Blood Group:" + ds["bloodGroup"];
+                                currentUser = userInfo;
+                                _confirm(ds['id'], userInfo.uid);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.only(
+                                    top: 20, left: 30, right: 30, bottom: 10),
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: themeColor % 2 == 0
+                                      ? style.CustomTheme.themeColor
+                                      : Colors.white,
+                                ),
+                                child: Text(
+                                  'Accept',
+                                  style: themeColor % 2 == 0
+                                      ? style.CustomTheme.buttonText
+                                      : style.CustomTheme.blackButtonText,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                );
-                else
+                      );
+                    } else
                   return Container();
               }),
             );

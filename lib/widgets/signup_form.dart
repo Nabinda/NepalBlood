@@ -122,7 +122,7 @@ class _SignUpFormState extends State<SignUpForm> {
         _isLoading = true;
       });
       final position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high).timeout(Duration(seconds: 5), onTimeout: () {
+          desiredAccuracy: LocationAccuracy.high).timeout(Duration(seconds: 20), onTimeout: () {
         return showDialog(
             context: context,
             builder: (context) {
