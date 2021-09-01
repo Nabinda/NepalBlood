@@ -25,7 +25,7 @@ class _UserInfoState extends State<UserInfo> {
   final _form = GlobalKey<FormState>();
   bool _isLoading = false;
 
-  _getLocation(BuildContext context) async {
+  _getLocation() async {
     String long;
     String lat;
     String localLocation;
@@ -53,7 +53,7 @@ class _UserInfoState extends State<UserInfo> {
         _isLoading = true;
       });
       final position = await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.high)
+          desiredAccuracy: LocationAccuracy.high)
           .timeout(Duration(seconds: 20), onTimeout: () {
         return showDialog(
             context: context,
@@ -76,7 +76,7 @@ class _UserInfoState extends State<UserInfo> {
             });
       });
       List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
+      await placemarkFromCoordinates(position.latitude, position.longitude);
       long = position.longitude.toString();
       lat = position.latitude.toString();
       setState(() {
@@ -84,7 +84,6 @@ class _UserInfoState extends State<UserInfo> {
         district = placemarks[1].subAdministrativeArea;
         _isLoading = false;
       });
-      print(localLocation +" " +district +" "+ lat +" "+ long);
       Provider.of<AuthProvider>(context, listen: false).updateUserLocation({
         "Local_Location": localLocation,
         "District": district,
@@ -93,7 +92,6 @@ class _UserInfoState extends State<UserInfo> {
       });
     }
   }
-
   void updateNumber(String contact) {
     Provider.of<AuthProvider>(context, listen: false)
         .updateUserInfo("Contact", contact).then((value){
@@ -253,7 +251,7 @@ class _UserInfoState extends State<UserInfo> {
                                 child: Text("No")),
                             TextButton(
                                 onPressed: () {
-                                  _getLocation(context);
+                                  _getLocation();
                                   Navigator.pop(context);
                                 },
                                 child: Text("Yes")),

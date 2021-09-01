@@ -5,7 +5,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 import 'package:flutter/services.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 
 class AddEventsScreen extends StatefulWidget {

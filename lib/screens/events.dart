@@ -130,13 +130,6 @@ class _EventsState extends State<Events> {
                               .difference(eventToDisplayed[index].startDate)
                               .isNegative)
                             Text("On Going Events"),
-                          if (eventToDisplayed[index].startDate.day -
-                                  DateTime.now().day ==
-                              1)
-                            Text(
-                              "Tomorrow",
-                              style: style.CustomTheme.boldHeader,
-                            ),
                           Text(dfh.DateFormatHelper.eventDate
                               .format(eventToDisplayed[index].startDate)),
                           Text(eventToDisplayed[index].title),

@@ -10,6 +10,7 @@ import 'package:bloodnepal/screens/donor_screen.dart';
 import 'package:bloodnepal/screens/events.dart';
 import 'package:bloodnepal/screens/events_detail_screen.dart';
 import 'package:bloodnepal/screens/login.dart';
+import 'package:bloodnepal/screens/message_screen.dart';
 import 'package:bloodnepal/screens/request_blood.dart';
 import 'package:bloodnepal/screens/reset_password_screen.dart';
 import 'package:bloodnepal/screens/search_screen.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           BloodRequests.routeName: (ctx) => BloodRequests(),
           RequestBlood.routeName: (ctx) => RequestBlood(),
           ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
+          MessageScreen.routeName: (ctx) => MessageScreen()
         },
       ),
     );
@@ -157,7 +159,7 @@ class _TryAutoLoginState extends State<TryAutoLogin> {
     isLogin = await Provider.of<AuthProvider>(context).tryAutoLogin();
     print("Login Value"+isLogin.toString());
     if (isLogin) {
-      _getLocation(context);
+     _getLocation(context);
     }else{
       setState(() {
         isLoading = false;

@@ -2,6 +2,7 @@ import 'package:bloodnepal/helper/loading_helper.dart';
 import 'package:bloodnepal/model/notification_model.dart';
 import 'package:bloodnepal/provider/events_provider.dart';
 import 'package:bloodnepal/screens/events_detail_screen.dart';
+import 'package:bloodnepal/screens/message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/helper/date_format_helper.dart' as dfh;
 import 'package:bloodnepal/custom_theme.dart' as style;
@@ -45,8 +46,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
         title: Text("Notifications"),
         centerTitle: true,
         actions: [
-          IconButton(icon: Icon(Icons.chat_bubble,color: Colors.white,), onPressed: null)
-          //TODO: Chatting features
+          IconButton(icon: Icon(Icons.chat_bubble,color: Colors.white,), onPressed: (){
+            Navigator.pushNamed(context, MessageScreen.routeName);
+          })
         ],
       ),
       body: isLoading?Center(child: LoadingHelper(loadingText: "Fetching Data")):ListView.builder(itemBuilder: (builder,index){

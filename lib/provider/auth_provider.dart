@@ -17,7 +17,6 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot docs) {
       userInfo = docs.data();
-      print(userInfo["Image_URL"]);
       currentUser = UserModel(
           uid: userInfo['User_Id'],
           firstName: userInfo["First_Name"],
@@ -55,7 +54,7 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> updateUserLocation(Map<String, dynamic> map) async {
+  Future<void> updateUserLocation(Map<String, String> map) async {
     await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentUser.uid)
