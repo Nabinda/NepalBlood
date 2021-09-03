@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class BloodRequestsProvider extends ChangeNotifier {
   List<BloodRequestModel> _requestList = [];
   Future<void> addRequest(String name, String patientName, String location,
-      String contact, String bloodGroup, DateTime date, TimeOfDay time) async {
+      String contact, String bloodGroup, DateTime date, TimeOfDay time, String uid) async {
     final docRef = FirebaseFirestore.instance.collection('Blood-Request').doc();
     await docRef.set({
       "id": docRef.id,
@@ -18,7 +18,8 @@ class BloodRequestsProvider extends ChangeNotifier {
       "timeHour": time.hour,
       "timeMinute": time.minute.toString(),
       "status": "Pending",
-      "donorId":null
+      "donorId":null,
+      "requestId":uid
     });
     _requestList.add(BloodRequestModel(
         donorId: null,

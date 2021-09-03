@@ -11,7 +11,7 @@ class AuthProvider extends ChangeNotifier {
   UserModel currentUser;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<void> getCurrentUserInfo(String uid) async {
-    await FirebaseFirestore.instance
+     await FirebaseFirestore.instance
         .collection('Users')
         .doc(uid)
         .get()

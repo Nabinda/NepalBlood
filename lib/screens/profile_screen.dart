@@ -5,6 +5,7 @@ import 'package:bloodnepal/widgets/profile_image.dart';
 import 'package:bloodnepal/widgets/user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
@@ -223,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   "Active"
                                                               ? "Inactive"
                                                               : "Active");
-                                                  Navigator.pop(context);
+                                                  Phoenix.rebirth(context);
                                                 },
                                                 child: Text("Yes")),
                                           ],
