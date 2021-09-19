@@ -53,8 +53,6 @@ class _MessageScreenState extends State<MessageScreen> {
                             donorEmail: docSnap.data["Email"],
                             bloodRequestId: ds["blood_request_id"],
                           );
-
-                            Text(docSnap.data['First_Name']);
                         }
                       },
                     );

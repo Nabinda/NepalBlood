@@ -1,54 +1,44 @@
 import 'package:bloodnepal/model/Categories_model.dart';
 import 'package:bloodnepal/screens/add_events.dart';
-import 'package:bloodnepal/screens/blood_bank.dart';
-import 'package:bloodnepal/screens/blood_requests.dart';
-import 'package:bloodnepal/screens/donor_screen.dart';
-import 'package:bloodnepal/screens/events.dart';
-import 'package:bloodnepal/screens/request_blood.dart';
-import 'package:bloodnepal/screens/search_screen.dart';
+import 'package:bloodnepal/screens/all_events.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
-class Categories extends StatelessWidget {
-  final String role;
-  Categories({@required this.role});
+class AdminPanel extends StatefulWidget {
+  const AdminPanel({Key key}) : super(key: key);
+
+  @override
+  _AdminPanelState createState() => _AdminPanelState();
+}
+
+class _AdminPanelState extends State<AdminPanel> {
+  final List<CategoriesModel> _categories = [
+    CategoriesModel(
+        name: "Add Events",
+        icon: "add_event.png",
+        routeName: AddEventsScreen.routeName),
+    CategoriesModel(
+        name: "All Events",
+        icon: "events.png",
+        routeName: AllEvents.routeName),
+    CategoriesModel(
+        name: "Requests Status",
+        icon: "request.png",
+        routeName: "RequestBlood.routeName"),
+    CategoriesModel(
+        name: "Donor Lists",
+        icon: "top.png",
+        routeName: "BloodRequests.routeName"),
+  ];
   @override
   Widget build(BuildContext context) {
-    final List<CategoriesModel> _categories = [
-      CategoriesModel(
-          name: "Events Nearby",
-          icon: "events.png",
-          routeName: Events.routeName),
-      CategoriesModel(
-          name: "Find a Donor",
-          icon: "search.png",
-          routeName: SearchScreen.routeName),
-      CategoriesModel(
-          name: "Blood Bank",
-          icon: "blood-bank.png",
-          routeName: BloodBankScreen.routeName),
-      CategoriesModel(
-          name: "Request Blood",
-          icon: "request.png",
-          routeName: RequestBlood.routeName),
-      if (role == "Donor" || role == "Admin")
-        CategoriesModel(
-            name: "Blood Requests",
-            icon: "top.png",
-            routeName: BloodRequests.routeName),
-      if (role == "Seeker")
-        CategoriesModel(
-            name: "Become a Donor",
-            icon: "donor.png",
-            routeName: DonorScreen.routeName),
-    ];
     return Container(
       padding: EdgeInsets.only(left: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Categories",
+            "Admin Access",
             style: style.CustomTheme.headerBlackNoto,
           ),
           Container(

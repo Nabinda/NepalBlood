@@ -1,4 +1,5 @@
 import 'package:bloodnepal/provider/auth_provider.dart';
+import 'package:bloodnepal/widgets/admin_panel.dart';
 import 'package:bloodnepal/widgets/categories.dart';
 import 'package:bloodnepal/widgets/curved_design.dart';
 import 'package:bloodnepal/widgets/funfacts.dart';
@@ -30,7 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             CurvedDesign(),
             Categories(role:userInfo.role),
-            FunFacts()
+            if(userInfo.role=="Admin")
+              AdminPanel(),
+            FunFacts(),
+
           ],
         ),
       ),

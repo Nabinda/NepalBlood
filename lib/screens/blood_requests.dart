@@ -46,6 +46,8 @@ class _BloodRequestsState extends State<BloodRequests> {
       return false;
     }else if(userInfo.status == "Active"){
       return true;
+    }else{
+      return false;
     }
   }
   _confirm(String id, UserModel userInfo) async {
