@@ -60,6 +60,8 @@ dependencies:
   #image_picker
   image_picker: ^0.7.4
   http: ^0.13.1
+  #connection checkup
+  connectivity: ^3.0.6
 
 
 dev_dependencies:

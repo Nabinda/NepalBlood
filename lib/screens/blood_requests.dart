@@ -12,7 +12,6 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:bloodnepal/helper/date_format_helper.dart' as dfh;
-
 class BloodRequests extends StatefulWidget {
   static const routeName = "/blood_requests";
 
@@ -28,6 +27,7 @@ class _BloodRequestsState extends State<BloodRequests> {
   String hour;
   String minute;
   String description;
+  bool connection = false;
   final List<String> bloodGroupCategories = [
     "All",
     "O+",
@@ -40,6 +40,7 @@ class _BloodRequestsState extends State<BloodRequests> {
     "AB-"
   ];
   String selectedBloodGroup = "All";
+
   bool checkDonorStatus(UserModel userInfo){
     print(userInfo.status);
     if(userInfo.status=="Inactive"){

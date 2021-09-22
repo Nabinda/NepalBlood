@@ -1,6 +1,8 @@
 import 'package:bloodnepal/model/Categories_model.dart';
 import 'package:bloodnepal/screens/add_events.dart';
 import 'package:bloodnepal/screens/all_events.dart';
+import 'package:bloodnepal/screens/blood_request_status.dart';
+import 'package:bloodnepal/screens/donor_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodnepal/custom_theme.dart' as style;
 
@@ -24,11 +26,11 @@ class _AdminPanelState extends State<AdminPanel> {
     CategoriesModel(
         name: "Requests Status",
         icon: "request.png",
-        routeName: "RequestBlood.routeName"),
+        routeName: BloodRequestStatus.routeName),
     CategoriesModel(
         name: "Donor Lists",
         icon: "top.png",
-        routeName: "BloodRequests.routeName"),
+        routeName: DonorLists.routeName),
   ];
   @override
   Widget build(BuildContext context) {

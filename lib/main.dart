@@ -5,8 +5,10 @@ import 'package:bloodnepal/provider/events_provider.dart';
 import 'package:bloodnepal/screens/add_events.dart';
 import 'package:bloodnepal/screens/all_events.dart';
 import 'package:bloodnepal/screens/blood_bank.dart';
+import 'package:bloodnepal/screens/blood_request_status.dart';
 import 'package:bloodnepal/screens/blood_requests.dart';
 import 'package:bloodnepal/screens/bottom_bar_screen.dart';
+import 'package:bloodnepal/screens/donor_lists.dart';
 import 'package:bloodnepal/screens/donor_screen.dart';
 import 'package:bloodnepal/screens/events.dart';
 import 'package:bloodnepal/screens/events_detail_screen.dart';
@@ -64,7 +66,8 @@ class MyApp extends StatelessWidget {
           ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
           MessageScreen.routeName: (ctx) => MessageScreen(),
           AllEvents.routeName: (ctx) => AllEvents(),
-
+          BloodRequestStatus.routeName: (ctx) => BloodRequestStatus(),
+          DonorLists.routeName: (ctx) => DonorLists()
         },
       ),
     );
